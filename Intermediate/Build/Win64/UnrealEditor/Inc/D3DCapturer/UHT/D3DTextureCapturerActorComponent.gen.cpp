@@ -57,20 +57,20 @@ void EmptyLinkFunctionForGeneratedCodeD3DTextureCapturerActorComponent() {}
 #endif
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UD3DTextureCapturerActorComponent_Statics::NewProp_PublishName_MetaData[] = {
-		{ "Category", "Spout" },
+		{ "Category", "D3DCapturer" },
 		{ "ModuleRelativePath", "Public/D3DTextureCapturerActorComponent.h" },
 	};
 #endif
 	const UECodeGen_Private::FNamePropertyParams Z_Construct_UClass_UD3DTextureCapturerActorComponent_Statics::NewProp_PublishName = { "PublishName", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Name, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UD3DTextureCapturerActorComponent, PublishName), METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_UD3DTextureCapturerActorComponent_Statics::NewProp_PublishName_MetaData), Z_Construct_UClass_UD3DTextureCapturerActorComponent_Statics::NewProp_PublishName_MetaData) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UD3DTextureCapturerActorComponent_Statics::NewProp_OutputTexture_MetaData[] = {
-		{ "Category", "Spout" },
+		{ "Category", "D3DCapturer" },
 #if !UE_BUILD_SHIPPING
-		{ "Comment", "// \xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd, \xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd \xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd \xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd \xef\xbf\xbd \xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd \xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd (\xef\xbf\xbd\xef\xbf\xbd \xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd \xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd) \n" },
+		{ "Comment", "// \xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd \xef\xbf\xbd\xef\xbf\xbd \xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd \xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd. \xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd RenderTarget\n" },
 #endif
 		{ "ModuleRelativePath", "Public/D3DTextureCapturerActorComponent.h" },
 #if !UE_BUILD_SHIPPING
-		{ "ToolTip", "\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd, \xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd \xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd \xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd \xef\xbf\xbd \xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd \xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd (\xef\xbf\xbd\xef\xbf\xbd \xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd \xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd)" },
+		{ "ToolTip", "\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd \xef\xbf\xbd\xef\xbf\xbd \xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd \xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd. \xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd\xef\xbf\xbd RenderTarget" },
 #endif
 	};
 #endif
@@ -117,9 +117,9 @@ void EmptyLinkFunctionForGeneratedCodeD3DTextureCapturerActorComponent() {}
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_leovb_Documents_Unreal_Projects_Sandbox_Plugins_D3DCapturer_Source_D3DCapturer_Public_D3DTextureCapturerActorComponent_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UD3DTextureCapturerActorComponent, UD3DTextureCapturerActorComponent::StaticClass, TEXT("UD3DTextureCapturerActorComponent"), &Z_Registration_Info_UClass_UD3DTextureCapturerActorComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UD3DTextureCapturerActorComponent), 714148341U) },
+		{ Z_Construct_UClass_UD3DTextureCapturerActorComponent, UD3DTextureCapturerActorComponent::StaticClass, TEXT("UD3DTextureCapturerActorComponent"), &Z_Registration_Info_UClass_UD3DTextureCapturerActorComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UD3DTextureCapturerActorComponent), 2680525053U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_leovb_Documents_Unreal_Projects_Sandbox_Plugins_D3DCapturer_Source_D3DCapturer_Public_D3DTextureCapturerActorComponent_h_3187023816(TEXT("/Script/D3DCapturer"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_leovb_Documents_Unreal_Projects_Sandbox_Plugins_D3DCapturer_Source_D3DCapturer_Public_D3DTextureCapturerActorComponent_h_1460145999(TEXT("/Script/D3DCapturer"),
 		Z_CompiledInDeferFile_FID_Users_leovb_Documents_Unreal_Projects_Sandbox_Plugins_D3DCapturer_Source_D3DCapturer_Public_D3DTextureCapturerActorComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_leovb_Documents_Unreal_Projects_Sandbox_Plugins_D3DCapturer_Source_D3DCapturer_Public_D3DTextureCapturerActorComponent_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);

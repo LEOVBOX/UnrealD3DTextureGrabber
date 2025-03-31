@@ -1,7 +1,4 @@
 // Fill out your copyright notice in the Description page of Project Settings.
-
-
-
 #pragma comment (lib, "d3d11.lib")
 #pragma comment (lib, "DXGI.lib")
 
@@ -33,12 +30,16 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spout")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "D3DCapturer")
 	FName PublishName;
 
-	// Тектура, которую будем передавать в другой процесс (из которой читаем) 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spout")
+	// Тектура из которой читаем. Например RenderTarget
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "D3DCapturer")
 	UTexture* OutputTexture;
 
+	// Старый метод получения захваченной текстуры с созданием нового экземпляра текстуры
 	UTexture2D* GetCapturedTexture();
+
+	// Актуальный метод получения захваченной текстуры без создания нового экземпляра текстуры
+	bool GetCapturedTexture(UTexture2D*& capturedTexture);
 };

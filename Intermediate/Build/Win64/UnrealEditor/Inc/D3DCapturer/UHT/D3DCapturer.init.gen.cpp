@@ -17,7 +17,7 @@ void EmptyLinkFunctionForGeneratedCodeD3DCapturer_init() {}
 				nullptr,
 				0,
 				PKG_CompiledIn | 0x00000000,
-				0x2D3A5FD5,
+				0x9E387654,
 				0xEFEC482E,
 				METADATA_PARAMS(0, nullptr)
 			};
@@ -25,5 +25,5 @@ void EmptyLinkFunctionForGeneratedCodeD3DCapturer_init() {}
 		}
 		return Z_Registration_Info_UPackage__Script_D3DCapturer.OuterSingleton;
 	}
-	static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_D3DCapturer(Z_Construct_UPackage__Script_D3DCapturer, TEXT("/Script/D3DCapturer"), Z_Registration_Info_UPackage__Script_D3DCapturer, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0x2D3A5FD5, 0xEFEC482E));
+	static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_D3DCapturer(Z_Construct_UPackage__Script_D3DCapturer, TEXT("/Script/D3DCapturer"), Z_Registration_Info_UPackage__Script_D3DCapturer, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0x9E387654, 0xEFEC482E));
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

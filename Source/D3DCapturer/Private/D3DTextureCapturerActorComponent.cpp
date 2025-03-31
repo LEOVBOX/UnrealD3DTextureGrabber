@@ -261,7 +261,7 @@ void UD3DTextureCapturerActorComponent::TickComponent(float DeltaTime, ELevelTic
 	context->Tick();
 }
 
-// ВЫЗЫВАЕТ ОШИБКУ GPU DEVICE REMOVED
+
 UTexture2D* UD3DTextureCapturerActorComponent::GetCapturedTexture()
 {
 	if (!context.IsValid() || !context->sendingTexture)
@@ -291,12 +291,14 @@ UTexture2D* UD3DTextureCapturerActorComponent::GetCapturedTexture()
 
 	// Блокируем текстуру в которую пишем
 	FTexture2DMipMap& Mip = CapturedTexture->GetPlatformData()->Mips[0];
-	void* TextureData = Mip.BulkData.Lock(LOCK_READ_WRITE);
+	
 
 	// Копируем данные из D3D11 текстуры в буфер UE
 	ID3D11DeviceContext* DeviceContext = context->deviceContext;
 	if (DeviceContext)
 	{
+		void* TextureData = Mip.BulkData.Lock(LOCK_READ_WRITE);
+
 		TRACE_CPUPROFILER_EVENT_SCOPE(GetCapturedTexture Flush);
 		double StartTime = FPlatformTime::Seconds();
 
@@ -334,84 +336,101 @@ UTexture2D* UD3DTextureCapturerActorComponent::GetCapturedTexture()
 		//	UE_LOG(LogTemp, Error, TEXT("DeviceContext->Unmap(context->WrappedDX11Resource, 0)"));
 		//}
 
+		Mip.BulkData.Unlock();
+
+		CapturedTexture->UpdateResource();
 	}
-
-	Mip.BulkData.Unlock();
-
-	CapturedTexture->UpdateResource();
 
 	return CapturedTexture;
 }
 
+bool UD3DTextureCapturerActorComponent::GetCapturedTexture(UTexture2D*& outputTexture)
+{
+	if (!context.IsValid() || !context->sendingTexture)
+	{
+		UE_LOG(LogTemp, Error, TEXT("UD3DTextureCapturerActorComponent::GetCapturedTexture() !context.IsValid() || !context->sendingTexture"));
+		return false;
+	}
 
-//UTexture2D* UD3DTextureCapturerActorComponent::GetCapturedTexture()
-//{
-//	if (!context.IsValid() || !context->sendingTexture)
-//	{
-//		UE_LOG(LogTemp, Error, TEXT("UD3DTextureCapturerActorComponent::GetCapturedTexture() !context.IsValid() || !context->sendingTexture"));
-//		return nullptr;
-//	}
-//
-//	// Получаем описание текстуры
-//	D3D11_TEXTURE2D_DESC desc;
-//	context->sendingTexture->GetDesc(&desc);
-//
-//
-//	if (desc.Usage != D3D11_USAGE_STAGING) {
-//		UE_LOG(LogTemp, Error, TEXT("context->sendingTexture is not a STAGING texture!"));
-//		return nullptr;
-//	}
-//
-//	// Создаем новую UTexture2D
-//	UTexture2D* CapturedTexture = UTexture2D::CreateTransient(desc.Width, desc.Height, PF_B8G8R8A8);
-//	if (!CapturedTexture)
-//	{
-//		return nullptr;
-//	}
-//
-//	CapturedTexture->AddToRoot(); // Предотвращает сборку мусора
-//
-//	// Блокируем текстуру в которую пишем
-//	FTexture2DMipMap& Mip = CapturedTexture->GetPlatformData()->Mips[0];
-//	void* TextureData = Mip.BulkData.Lock(LOCK_READ_WRITE);
-//	if (desc.Usage != D3D11_USAGE_STAGING) {
-//		UE_LOG(LogTemp, Error, TEXT("CaptureTextureOnRenderThread: Texture is not a STAGING texture!"));
-//		return nullptr;
-//	}
-//
-//	ID3D11DeviceContext* DeviceContext = context->deviceContext;
-//	if (!DeviceContext) {
-//		UE_LOG(LogTemp, Error, TEXT("CaptureTextureOnRenderThread: DeviceContext is null"));
-//		return nullptr;
-//	}
-//
-//	// Выполняем Map() в Render Thread
-//	ENQUEUE_RENDER_COMMAND(CaptureTexture)(
-//		[this, DeviceContext, TextureData, desc](FRHICommandListImmediate& RHICmdList)
-//		{
-//			TRACE_CPUPROFILER_EVENT_SCOPE(GetCapturedTexture Map)
-//			D3D11_MAPPED_SUBRESOURCE MappedResource;
-//			HRESULT hr = DeviceContext->Map(context->sendingTexture, 0, D3D11_MAP_READ, 0, &MappedResource);
-//			if (SUCCEEDED(hr)) 
-//			{
-//				TRACE_CPUPROFILER_EVENT_SCOPE(GetCapturedTexture Map)
-//				// Копируем данные из D3D текстуры в TargetTexture
-//				FMemory::Memcpy(TextureData, MappedResource.pData, desc.Width * desc.Height * 4); // RGBA8 (4 байта на пиксель)
-//
-//				DeviceContext->Unmap(context->sendingTexture, 0);
-//				return;
-//			}
-//			else 
-//			{
-//				UE_LOG(LogTemp, Error, TEXT("CaptureTextureOnRenderThread: Map() failed! HRESULT: %d"), hr);
-//				return;
-//			}
-//
-//			//DeviceContext->Flush();
-//		}
-//	);
-//
-//	Mip.BulkData.Unlock();
-//
-//	return CapturedTexture;
-//}
+	// Получаем описание текстуры
+	D3D11_TEXTURE2D_DESC desc;
+	context->sendingTexture->GetDesc(&desc);
+
+	if (desc.Usage != D3D11_USAGE_STAGING) {
+		UE_LOG(LogTemp, Error, TEXT("context->sendingTexture is not a STAGING texture!"));
+		return false;
+	}
+
+	// Создаем новую UTexture2D только если изменились размеры текстуры
+	if (!outputTexture || desc.Width != outputTexture->GetSizeX() || desc.Height != outputTexture->GetSizeY())
+	{
+		UTexture2D* NewTexture = UTexture2D::CreateTransient(desc.Width, desc.Height, PF_B8G8R8A8);
+		if (!NewTexture)
+		{
+			UE_LOG(LogTemp, Error, TEXT("Failed to create UTexture2D!"));
+			return false;
+		}
+
+		if (outputTexture)
+		{
+			outputTexture->RemoveFromRoot();
+			outputTexture->ConditionalBeginDestroy();
+		}
+
+		outputTexture = nullptr;
+
+		NewTexture->AddToRoot(); // Предотвращает сборку мусора
+		outputTexture = NewTexture;
+
+		if (!outputTexture)
+		{
+			UE_LOG(LogTemp, Error, TEXT("outputTexture is null after recreation!"));
+			return false;
+		}
+	}
+
+	// Блокируем текстуру в которую пишем
+	FTexture2DMipMap& Mip = outputTexture->GetPlatformData()->Mips[0];
+
+	ID3D11DeviceContext* DeviceContext = context->deviceContext;
+	if (!DeviceContext)
+	{
+		UE_LOG(LogTemp, Error, TEXT("DeviceContext is null!"));
+		return false;
+	}
+
+	void* TextureData = Mip.BulkData.Lock(LOCK_READ_WRITE);
+	if (!TextureData)
+	{
+		UE_LOG(LogTemp, Error, TEXT("Mip.BulkData.Lock() failed!"));
+		return false;
+	}
+
+	TRACE_CPUPROFILER_EVENT_SCOPE(GetCapturedTexture Flush);
+	double StartTime = FPlatformTime::Seconds();
+	DeviceContext->Flush();
+	double EndTime = FPlatformTime::Seconds();
+	UE_LOG(LogTemp, Log, TEXT("Flush took: %f ms"), (EndTime - StartTime) * 1000.0);
+
+	if (!context->sendingTexture)
+	{
+		UE_LOG(LogTemp, Error, TEXT("context->sendingTexture is null before Map()!"));
+		return false;
+	}
+
+	D3D11_MAPPED_SUBRESOURCE MappedResource;
+	HRESULT hr = DeviceContext->Map(context->sendingTexture, 0, D3D11_MAP_READ, 0, &MappedResource);
+	if (FAILED(hr))
+	{
+		UE_LOG(LogTemp, Error, TEXT("Map() failed! HRESULT: %d"), hr);
+		Mip.BulkData.Unlock();
+		return false;
+	}
+
+	FMemory::Memcpy(TextureData, MappedResource.pData, desc.Width * desc.Height * 4); // RGBA8 (4 байта на пиксель)
+	DeviceContext->Unmap(context->sendingTexture, 0);
+
+	Mip.BulkData.Unlock();
+
+	return true;
+}
