@@ -306,7 +306,7 @@ UTexture2D* UD3DTextureCapturerActorComponent::GetCapturedTexture()
 		DeviceContext->Flush();
 
 		double EndTime = FPlatformTime::Seconds();
-		UE_LOG(LogTemp, Log, TEXT("Flush took: %f ms"), (EndTime - StartTime) * 1000.0);
+		//UE_LOG(LogTemp, Log, TEXT("Flush took: %f ms"), (EndTime - StartTime) * 1000.0);
 		
 
 		D3D11_MAPPED_SUBRESOURCE MappedResource;
@@ -410,7 +410,7 @@ bool UD3DTextureCapturerActorComponent::GetCapturedTexture(UTexture2D*& outputTe
 	double StartTime = FPlatformTime::Seconds();
 	DeviceContext->Flush();
 	double EndTime = FPlatformTime::Seconds();
-	UE_LOG(LogTemp, Log, TEXT("Flush took: %f ms"), (EndTime - StartTime) * 1000.0);
+	//UE_LOG(LogTemp, Log, TEXT("Flush took: %f ms"), (EndTime - StartTime) * 1000.0);
 
 	if (!context->sendingTexture)
 	{
