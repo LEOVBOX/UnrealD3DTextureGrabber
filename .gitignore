@@ -3,8 +3,9 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
-Binaries/
-Intermediate/
+# Unreal Engine generated directories
+/Binaries/
+/Intermediate/
 
 # User-specific files
 *.rsuser
